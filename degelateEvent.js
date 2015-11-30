@@ -35,7 +35,7 @@ event, <h1></h1> h1 target
   // 难倒 digest循环中也有异步处理? 可是有也不能保证 digest中的异步处理在该 处理之前呀。
   // 所以 digest 循环中是没有异步处理的。
   // 关于这个设定,有点不懂。不过为了安全起见，我也这样写。
-  
+
   var forceAsyncEvents = {
     'blur': true,
     'focus': true
@@ -55,10 +55,13 @@ event, <h1></h1> h1 target
             /**************************************************/
             //大概解释下: 当 event handler 执行没 “regular change detection”(这是什么意思呀？？？定期改变发现？？ 难倒是 脏值检测？) 这么频繁时,我们就以花费速度为代价 明确要求 进行更好的监测。
             // 这是什么意思？？求解。 这是 $parse 第三个参数的含义。
+
             var fn = $parse(attr[directiveName],null,true);
+
             //在编译阶段就可以先解析所需要运行的 函数。
             //如果放在 link 阶段, 一个 ng-repeat,那么这个 所需要运行的函数 可能就会被解析多次.
-            return function ngEventHandler(scope, element, attr) { //返回 link阶段函数
+            
+            return function (scope, element, attr) { //返回 link阶段函数
 
               var selector = attr["selector" + eventName];//获取selector
 
